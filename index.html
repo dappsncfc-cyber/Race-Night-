@@ -362,7 +362,7 @@
 
   <!-- OFFICIAL CELEBRATORY WINNER PAYOUT OVERLAY (TV Big Screen View) -->
   <div id="payoutScreenOverlay" class="fixed inset-0 z-50 bg-brand-dark/95 backdrop-blur-xl hidden flex-col items-center justify-center p-4 sm:p-8 text-center animate-fade">
-    <div class="max-w-4xl w-full card-glass-fav rounded-3xl p-6 sm:p-12 border-2 border-brand-gold shadow-[0_0_80px_rgba(197,160,89,0.35)] relative overflow-hidden">
+    <div class="max-w-4xl w-full max-h-[90vh] overflow-y-auto card-glass-fav rounded-3xl p-6 sm:p-8 border-2 border-brand-gold shadow-[0_0_80px_rgba(197,160,89,0.35)] relative">
       
       <!-- Top Crest & Banner -->
       <div class="flex items-center justify-center gap-3 mb-2">
@@ -430,10 +430,17 @@
         </div>
       </div>
 
-      <!-- Operator Close Overlay Button -->
-      <button onclick="closePayoutOverlay()" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-brand-gold to-brand-goldlight hover:from-yellow-400 hover:to-amber-500 text-slate-950 font-black text-sm uppercase tracking-wider font-sans shadow-xl active:scale-95 transition">
-        Confirm & Next Race ➡️
+      <!-- Top Right Close Button -->
+      <button onclick="closePayoutOverlay(false)" class="absolute top-4 right-4 text-brand-silver hover:text-white p-2 rounded-lg bg-black/40 border border-brand-gold/30 transition" title="Close Overlay">
+        ✕
       </button>
+
+      <!-- Operator Close Overlay / Back Button -->
+      <div class="flex items-center justify-center gap-4">
+        <button id="payoutNextRaceBtn" onclick="closePayoutOverlay(true)" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-brand-gold to-brand-goldlight hover:from-yellow-400 hover:to-amber-500 text-slate-950 font-black text-sm uppercase tracking-wider font-sans shadow-xl active:scale-95 transition flex items-center gap-2">
+          ⬅️ Back to Main Page & Select Next Race
+        </button>
+      </div>
     </div>
   </div>
 
@@ -611,6 +618,7 @@
         distance: "6 Furlongs (Sprint)",
         isLocked: false,
         winnerId: null,
+        videoSrc: "race1.webm",
         horses: [
           {
             id: 1,
@@ -1011,7 +1019,7 @@
     }
 
     // --- VIDEO PLAYER & CINEMA THEATRE ENGINE ---
-    let raceVideoSrc = 'Screen recording 2026-10-11 16.42.55.webm';
+    let raceVideoSrc = 'race1.webm';
 
     function startRacePlayback() {
       const race = getCurrentRace();
@@ -1033,9 +1041,10 @@
       const video = document.getElementById('raceVideoElement');
       const emptyPrompt = document.getElementById('videoEmptyPrompt');
 
-      if (raceVideoSrc) {
+      const currentVideoSrc = race.videoSrc || raceVideoSrc;
+      if (currentVideoSrc) {
         emptyPrompt.classList.add('hidden');
-        video.src = raceVideoSrc;
+        video.src = currentVideoSrc;
         video.currentTime = 0;
         video.play().catch(() => {});
       } else {
@@ -1410,6 +1419,16 @@
       document.getElementById('payoutSummaryCharity').innerText = `£${charityRetention.toFixed(2)}`;
       document.getElementById('payoutSummaryPaid').innerText = `£${(winner.tickets > 0 ? prizePot : 0).toFixed(2)}`;
 
+      // Update button text depending on whether a next race is available
+      const nextBtn = document.getElementById('payoutNextRaceBtn');
+      if (nextBtn) {
+        if (AppState.currentRaceId < AppState.races.length) {
+          nextBtn.innerText = `⬅️ Back to Main Page & Select Race ${AppState.currentRaceId + 1}`;
+        } else {
+          nextBtn.innerText = "⬅️ Back to Main Page";
+        }
+      }
+
       // Show overlay and play fanfare
       SoundFX.playFanfare();
       document.getElementById('payoutScreenOverlay').classList.remove('hidden');
@@ -1419,12 +1438,12 @@
       renderToteBoard();
     }
 
-    function closePayoutOverlay() {
+    function closePayoutOverlay(advanceToNext = true) {
       document.getElementById('payoutScreenOverlay').classList.add('hidden');
       document.getElementById('payoutScreenOverlay').classList.remove('flex');
 
-      // Auto-advance to next race if available
-      if (AppState.currentRaceId < AppState.races.length) {
+      // Auto-advance to next race if requested and available
+      if (advanceToNext && AppState.currentRaceId < AppState.races.length) {
         selectRace(AppState.currentRaceId + 1);
       }
     }
