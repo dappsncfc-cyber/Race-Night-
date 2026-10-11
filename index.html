@@ -96,17 +96,17 @@
     }
   </style>
 </head>
-<body class="bg-brand-dark text-brand-platinum min-h-screen flex flex-col font-sans selection:bg-brand-gold selection:text-brand-dark antialiased overflow-x-hidden">
+<body class="bg-brand-dark text-brand-platinum h-screen max-h-screen flex flex-col font-sans selection:bg-brand-gold selection:text-brand-dark antialiased overflow-hidden">
 
 
   <!-- TOP BRANDING & NAVIGATION HEADER -->
-  <header class="w-full bg-gradient-to-b from-[#08120c] via-brand-forest to-[#0d1f15] border-b border-brand-gold/30 shadow-2xl relative z-30">
-    <div class="max-w-[1920px] mx-auto px-4 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+  <header class="w-full bg-gradient-to-b from-[#08120c] via-brand-forest to-[#0d1f15] border-b border-brand-gold/30 shadow-2xl relative z-30 flex-shrink-0">
+    <div class="max-w-[1920px] mx-auto px-4 lg:px-6 py-2 flex flex-wrap items-center justify-between gap-2">
       
       <!-- Logo + Brand Identity -->
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3">
         <!-- Stylized Low-Poly Geometric Horse SVG Motif -->
-        <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 relative group cursor-pointer" onclick="SoundFX.playFanfare()" title="The White Horse Inn">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 flex-shrink-0 relative group cursor-pointer" onclick="SoundFX.playFanfare()" title="The White Horse Inn">
           <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_4px_10px_rgba(0,0,0,0.6)]">
             <defs>
               <linearGradient id="facetGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -159,37 +159,37 @@
 
         <div>
           <div class="flex items-baseline gap-2">
-            <h1 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider gold-gradient-text">
+            <h1 class="font-serif text-xl sm:text-2xl lg:text-3xl font-bold tracking-wider gold-gradient-text">
               The White Horse Inn
             </h1>
-            <span class="hidden sm:inline-block text-xs uppercase tracking-[0.25em] text-brand-silver font-semibold">Cromer</span>
+            <span class="hidden sm:inline-block text-[10px] uppercase tracking-[0.2em] text-brand-silver font-semibold">Cromer</span>
           </div>
-          <div class="flex items-center gap-2 text-xs sm:text-sm text-brand-silver/90 font-serif italic tracking-widest">
+          <div class="flex items-center gap-1.5 text-[11px] sm:text-xs text-brand-silver/90 font-serif italic tracking-widest">
             <span>dine</span>
-            <span class="text-brand-gold text-[10px]">•</span>
+            <span class="text-brand-gold text-[8px]">•</span>
             <span>drink</span>
-            <span class="text-brand-gold text-[10px]">•</span>
+            <span class="text-brand-gold text-[8px]">•</span>
             <span>sleep</span>
-            <span class="mx-2 text-brand-gold/60">|</span>
-            <span class="not-italic font-sans text-[11px] font-bold text-amber-300 uppercase tracking-wider">Official Race Night Tote</span>
+            <span class="mx-1.5 text-brand-gold/60">|</span>
+            <span class="not-italic font-sans text-[10px] font-bold text-amber-300 uppercase tracking-wider">Official Race Night Tote</span>
           </div>
         </div>
       </div>
 
 
       <!-- Right Header: 10-Minute Betting Countdown Clock & Operator Controls -->
-      <div class="flex items-center flex-wrap gap-3 sm:gap-4">
+      <div class="flex items-center flex-wrap gap-2 sm:gap-3">
         
         <!-- COUNTDOWN TIMER DISPLAY -->
-        <div id="timerContainer" class="card-glass px-4 py-2 rounded-2xl border border-brand-gold/40 flex items-center gap-3 shadow-lg">
+        <div id="timerContainer" class="card-glass px-3 py-1 rounded-xl border border-brand-gold/40 flex items-center gap-2 shadow-lg">
           <div class="flex flex-col text-right">
-            <span id="timerLabel" class="text-[10px] font-extrabold uppercase tracking-widest text-brand-gold font-sans">Betting Window</span>
-            <span id="timerStatusSub" class="text-[9px] text-brand-silver uppercase font-semibold">Place bets at desk</span>
+            <span id="timerLabel" class="text-[9px] font-extrabold uppercase tracking-widest text-brand-gold font-sans">Betting Window</span>
+            <span id="timerStatusSub" class="text-[8px] text-brand-silver uppercase font-semibold">Place bets at desk</span>
           </div>
-          <div class="flex items-center gap-1.5 font-display text-2xl sm:text-3xl font-black tracking-tight" id="timerValueDisplay">
-            <span id="timerMinutes" class="bg-black/50 px-2 py-0.5 rounded-lg text-brand-cream border border-brand-forest">10</span>
+          <div class="flex items-center gap-1 font-display text-xl sm:text-2xl font-black tracking-tight" id="timerValueDisplay">
+            <span id="timerMinutes" class="bg-black/50 px-1.5 py-0.5 rounded-md text-brand-cream border border-brand-forest">10</span>
             <span class="text-brand-gold animate-pulse">:</span>
-            <span id="timerSeconds" class="bg-black/50 px-2 py-0.5 rounded-lg text-brand-cream border border-brand-forest">00</span>
+            <span id="timerSeconds" class="bg-black/50 px-1.5 py-0.5 rounded-md text-brand-cream border border-brand-forest">00</span>
           </div>
         </div>
 
@@ -227,7 +227,7 @@
     </div>
 
     <!-- 6-RACE SCHEDULE TABS -->
-    <div class="bg-black/60 border-t border-brand-gold/20 px-4 lg:px-8 py-2 overflow-x-auto scrollbar-none">
+    <div class="bg-black/60 border-t border-brand-gold/20 px-4 lg:px-6 py-1 overflow-x-auto scrollbar-none">
       <div class="max-w-[1920px] mx-auto flex items-center justify-between gap-2 min-w-max">
         <div class="flex items-center gap-1.5" id="raceTabsContainer">
           <!-- Populated by JavaScript for Races 1 through 6 -->
@@ -235,10 +235,10 @@
 
         <!-- Operator Lock / Declare Winner Quick Bar -->
         <div class="operator-only flex items-center gap-2 pl-4 border-l border-brand-moss">
-          <button onclick="openWinnerModal()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-extrabold text-xs tracking-wider uppercase shadow-lg transition flex items-center gap-1">
+          <button onclick="openWinnerModal()" class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-extrabold text-[11px] tracking-wider uppercase shadow transition flex items-center gap-1">
             <span>🏆</span> Declare Winner
           </button>
-          <button onclick="openConfigModal()" class="p-1.5 rounded-lg bg-brand-forest hover:bg-brand-moss text-brand-silver hover:text-white text-xs border border-brand-gold/30" title="Tote Stakes & Charity Cut">
+          <button onclick="openConfigModal()" class="p-1 rounded-lg bg-brand-forest hover:bg-brand-moss text-brand-silver hover:text-white text-[11px] border border-brand-gold/30" title="Tote Stakes & Charity Cut">
             ⚙️ Settings
           </button>
         </div>
@@ -248,81 +248,81 @@
 
 
   <!-- MAIN VIEWPORT CONTENT -->
-  <main class="flex-1 max-w-[1920px] w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col gap-4" id="mainToteContainer">
+  <main class="flex-1 max-w-[1920px] w-full mx-auto px-3 py-2 flex flex-col gap-2 min-h-0 overflow-hidden" id="mainToteContainer">
 
     <!-- RACE METADATA & FINANCIAL TOTE SUMMARY BAR -->
-    <div class="card-glass rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4 border border-brand-gold/30">
+    <div class="card-glass rounded-xl p-2.5 sm:p-3 flex flex-wrap items-center justify-between gap-2 border border-brand-gold/30 flex-shrink-0">
       
       <!-- Current Race Title & Status -->
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-forest to-brand-dark border-2 border-brand-gold flex items-center justify-center font-serif text-2xl font-black text-brand-gold shadow-md" id="raceNumberBadge">
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-forest to-brand-dark border border-brand-gold flex items-center justify-center font-serif text-xl font-black text-brand-gold shadow" id="raceNumberBadge">
           R1
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h2 class="text-xl sm:text-2xl lg:text-3xl font-serif font-bold tracking-wide text-brand-cream" id="raceTitleText">
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-serif font-bold tracking-wide text-brand-cream" id="raceTitleText">
               The West Street Maiden Stakes
             </h2>
-            <span id="raceLockBadge" class="hidden px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-red-600/90 text-white border border-red-400 animate-pulse">
+            <span id="raceLockBadge" class="hidden px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-widest bg-red-600/90 text-white border border-red-400 animate-pulse">
               BETS CLOSED
             </span>
           </div>
-          <p class="text-xs sm:text-sm text-brand-silver font-sans mt-0.5">
+          <p class="text-[11px] sm:text-xs text-brand-silver font-sans">
             Distance: <span class="text-brand-cream font-medium" id="raceDistanceText">6 Furlongs</span> • 
-            Field: <span class="text-brand-gold font-semibold">8 Runners</span> • 
+            Field: <span class="text-brand-gold font-semibold">10 Runners</span> •
             Tote Standard: <span class="text-emerald-400 font-bold" id="toteTicketStakeLabel">£1.00</span> per ticket
           </p>
         </div>
       </div>
 
       <!-- Financial Pool Statistics (Visible on TV screen for transparency & buzz) -->
-      <div class="flex items-center flex-wrap gap-2 sm:gap-4 font-display">
+      <div class="flex items-center flex-wrap gap-2 font-display">
         <!-- Total Tickets Staked -->
-        <div class="bg-black/50 border border-brand-forest px-3 sm:px-4 py-2 rounded-xl text-center min-w-[90px]">
-          <span class="block text-[10px] uppercase font-bold text-brand-silver tracking-wider">Tickets Sold</span>
-          <span class="text-base sm:text-xl font-extrabold text-brand-platinum" id="statTotalTickets">0</span>
+        <div class="bg-black/50 border border-brand-forest px-3 py-1 rounded-lg text-center min-w-[75px]">
+          <span class="block text-[9px] uppercase font-bold text-brand-silver tracking-wider">Tickets Sold</span>
+          <span class="text-sm sm:text-lg font-extrabold text-brand-platinum" id="statTotalTickets">0</span>
         </div>
 
         <!-- Gross Pool -->
-        <div class="bg-black/50 border border-brand-forest px-3 sm:px-4 py-2 rounded-xl text-center min-w-[100px]">
-          <span class="block text-[10px] uppercase font-bold text-brand-silver tracking-wider">Total Pool</span>
-          <span class="text-base sm:text-xl font-extrabold text-amber-300" id="statGrossPool">£0.00</span>
+        <div class="bg-black/50 border border-brand-forest px-3 py-1 rounded-lg text-center min-w-[85px]">
+          <span class="block text-[9px] uppercase font-bold text-brand-silver tracking-wider">Total Pool</span>
+          <span class="text-sm sm:text-lg font-extrabold text-amber-300" id="statGrossPool">£0.00</span>
         </div>
 
         <!-- Charity / House Retention -->
-        <div class="bg-black/50 border border-brand-forest px-3 sm:px-4 py-2 rounded-xl text-center min-w-[110px]">
-          <span class="block text-[10px] uppercase font-bold text-emerald-400 tracking-wider">Charity Fund (<span id="statRetentionPercent">50%</span>)</span>
-          <span class="text-base sm:text-xl font-extrabold text-emerald-400" id="statCharityCut">£0.00</span>
+        <div class="bg-black/50 border border-brand-forest px-3 py-1 rounded-lg text-center min-w-[95px]">
+          <span class="block text-[9px] uppercase font-bold text-emerald-400 tracking-wider">Charity Fund (<span id="statRetentionPercent">50%</span>)</span>
+          <span class="text-sm sm:text-lg font-extrabold text-emerald-400" id="statCharityCut">£0.00</span>
         </div>
 
         <!-- Winner Prize Pot -->
-        <div class="bg-gradient-to-br from-brand-moss/80 to-brand-dark border-2 border-brand-gold/60 px-4 sm:px-5 py-2 rounded-xl text-center min-w-[120px] shadow-lg">
-          <span class="block text-[10px] uppercase font-black text-brand-goldlight tracking-widest">Punters' Prize Pot</span>
-          <span class="text-lg sm:text-2xl font-black text-yellow-300" id="statPrizePot">£0.00</span>
+        <div class="bg-gradient-to-br from-brand-moss/80 to-brand-dark border border-brand-gold/60 px-3.5 py-1 rounded-lg text-center min-w-[105px] shadow">
+          <span class="block text-[9px] uppercase font-black text-brand-goldlight tracking-widest">Punters' Prize Pot</span>
+          <span class="text-base sm:text-xl font-black text-yellow-300" id="statPrizePot">£0.00</span>
         </div>
       </div>
 
     </div>
 
 
-    <!-- LIVE DYNAMIC RUNNERS BOARD (Ordered from Favourite #1 down to Longshot #8) -->
-    <div class="flex-1">
-      <div class="flex items-center justify-between mb-2 px-2 text-xs uppercase font-extrabold tracking-wider text-brand-silver">
+    <!-- LIVE DYNAMIC RUNNERS BOARD (Ordered from Favourite #1 down to Longshot) -->
+    <div class="flex-1 flex flex-col min-h-0">
+      <div class="flex items-center justify-between mb-1 px-2 text-[11px] uppercase font-extrabold tracking-wider text-brand-silver flex-shrink-0">
         <div class="flex items-center gap-2">
           <span>Tote Rank & Runner</span>
           <span class="text-[10px] text-brand-gold normal-case font-normal">(Re-orders dynamically by tickets sold)</span>
         </div>
-        <div class="flex items-center gap-6 sm:gap-12 text-right">
-          <span class="w-20 text-center">Tote Share</span>
-          <span class="w-24 text-center">Tickets Backed</span>
-          <span class="w-28 text-right text-brand-gold">Proj. Payout</span>
-          <span class="operator-only w-32 text-center">Operator Bet Entry</span>
+        <div class="flex items-center gap-4 sm:gap-8 text-right">
+          <span class="w-16 sm:w-20 text-center">Tote Share</span>
+          <span class="w-16 sm:w-20 text-center">Tickets Backed</span>
+          <span class="w-20 sm:w-24 text-right text-brand-gold">Proj. Payout</span>
+          <span class="operator-only w-28 text-center">Operator Bet Entry</span>
         </div>
       </div>
 
       <!-- Container where rows are smoothly sorted in DOM -->
-      <div id="horsesListContainer" class="flex flex-col gap-2.5">
-        <!-- 8 Horse Cards generated and updated via JavaScript -->
+      <div id="horsesListContainer" class="flex-1 flex flex-col justify-between gap-1 sm:gap-1.5 min-h-0">
+        <!-- Horse Cards generated and updated via JavaScript -->
       </div>
     </div>
 
@@ -1146,7 +1146,7 @@
         }
 
         const row = document.createElement('div');
-        row.className = `horse-row rounded-2xl p-2.5 sm:p-3.5 flex items-center justify-between gap-3 transition-all ${
+        row.className = `horse-row flex-1 min-h-0 rounded-xl px-2.5 sm:px-3 py-1 sm:py-1.5 flex items-center justify-between gap-2.5 transition-all ${
           isFav 
             ? 'card-glass-fav pulse-fav' 
             : 'card-glass hover:border-brand-gold/40'
@@ -1154,25 +1154,25 @@
 
         // Render silk graphic or fallback badge
         const silkDisplay = horse.silkSvg 
-          ? `<div class="w-11 h-11 sm:w-12 sm:h-12 flex-shrink-0 relative flex items-center justify-center p-0.5">${horse.silkSvg}</div>`
-          : `<div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center font-display font-black text-xl sm:text-2xl shadow-lg border-2 border-white/20 flex-shrink-0" style="background-color: ${horse.silkBg || '#333'}; color: ${horse.silkText || '#fff'};">
+          ? `<div class="w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0 relative flex items-center justify-center p-0.5">${horse.silkSvg}</div>`
+          : `<div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center font-display font-black text-base shadow border border-white/20 flex-shrink-0" style="background-color: ${horse.silkBg || '#333'}; color: ${horse.silkText || '#fff'};">
               ${horse.num}
             </div>`;
 
         row.innerHTML = `
           <!-- Rank, Number, Silk & Runner Details -->
-          <div class="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1">
+          <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <!-- Dynamic Rank Position Badge -->
-            <div class="flex flex-col items-center justify-center w-7 sm:w-8 flex-shrink-0">
-              <span class="text-xs font-black font-display ${isFav ? 'text-amber-300 font-extrabold text-sm' : 'text-brand-silver'}">
+            <div class="flex flex-col items-center justify-center w-6 sm:w-7 flex-shrink-0">
+              <span class="text-xs font-black font-display ${isFav ? 'text-amber-300 font-extrabold text-xs' : 'text-brand-silver'}">
                 #${index + 1}
               </span>
-              ${isFav ? '<span class="text-[9px] font-black uppercase text-amber-300 font-sans tracking-tight">FAV</span>' : ''}
-              ${is2ndFav ? '<span class="text-[8px] font-bold text-slate-400 font-sans">2nd</span>' : ''}
+              ${isFav ? '<span class="text-[8px] font-black uppercase text-amber-300 font-sans tracking-tight">FAV</span>' : ''}
+              ${is2ndFav ? '<span class="text-[7px] font-bold text-slate-400 font-sans">2nd</span>' : ''}
             </div>
 
             <!-- Cloth Number Badge -->
-            <div class="w-8 h-8 rounded-lg bg-black/60 border border-brand-gold/50 flex items-center justify-center text-sm sm:text-base font-black font-display text-brand-gold flex-shrink-0">
+            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-black/60 border border-brand-gold/50 flex items-center justify-center text-xs sm:text-sm font-black font-display text-brand-gold flex-shrink-0">
               ${horse.num}
             </div>
 
@@ -1181,15 +1181,15 @@
 
             <!-- Runner Name, Owner & Jockey -->
             <div class="min-w-0 flex-1">
-              <div class="flex items-center gap-2">
-                <span class="text-base sm:text-xl lg:text-2xl font-serif font-bold tracking-wide truncate ${isFav ? 'text-white font-extrabold' : 'text-brand-cream'}">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm sm:text-base lg:text-lg font-serif font-bold tracking-wide truncate ${isFav ? 'text-white font-extrabold' : 'text-brand-cream'}">
                   ${horse.name}
                 </span>
-                <button onclick="openEditHorseModal(${horse.id})" class="operator-only text-brand-silver/60 hover:text-brand-gold text-xs transition" title="Edit name / owner">
+                <button onclick="openEditHorseModal(${horse.id})" class="operator-only text-brand-silver/60 hover:text-brand-gold text-[10px] transition" title="Edit name / owner">
                   ✎
                 </button>
               </div>
-              <div class="text-[11px] sm:text-xs text-brand-silver truncate flex items-center gap-2">
+              <div class="text-[10px] sm:text-[11px] text-brand-silver truncate flex items-center gap-2">
                 <span>Jockey: <strong class="text-brand-platinum font-semibold">${horse.jockey || 'Apprentice'}</strong></span>
                 <span class="text-brand-gold">•</span>
                 <span>Owner: <strong class="text-brand-platinum font-normal">${horse.owner || 'Open'}</strong></span>
@@ -1198,43 +1198,43 @@
           </div>
 
           <!-- Tote Betting Metrics: Share, Tickets, Projected Return -->
-          <div class="flex items-center gap-4 sm:gap-8 flex-shrink-0">
+          <div class="flex items-center gap-3 sm:gap-6 flex-shrink-0">
             
             <!-- Pool Share Progress Bar & % -->
-            <div class="w-20 hidden sm:flex flex-col items-center">
-              <div class="text-xs font-black font-display ${isFav ? 'text-amber-300' : 'text-brand-platinum'}">
+            <div class="w-16 sm:w-20 hidden sm:flex flex-col items-center">
+              <div class="text-[11px] font-black font-display ${isFav ? 'text-amber-300' : 'text-brand-platinum'}">
                 ${sharePercent}%
               </div>
-              <div class="w-full bg-black/60 rounded-full h-1.5 mt-1 overflow-hidden border border-brand-moss">
+              <div class="w-full bg-black/60 rounded-full h-1 mt-0.5 overflow-hidden border border-brand-moss">
                 <div class="h-full rounded-full ${isFav ? 'bg-gradient-to-r from-brand-gold to-amber-300' : 'bg-brand-emerald'}" style="width: ${sharePercent}%"></div>
               </div>
             </div>
 
             <!-- Tickets Staked Box -->
-            <div class="w-20 sm:w-24 text-center">
-              <span class="text-sm sm:text-lg font-black font-display text-white">
+            <div class="w-16 sm:w-20 text-center">
+              <span class="text-xs sm:text-base font-black font-display text-white">
                 ${horse.tickets}
               </span>
-              <span class="block text-[9px] uppercase font-bold text-brand-silver">tickets</span>
+              <span class="block text-[8px] uppercase font-bold text-brand-silver">tickets</span>
             </div>
 
             <!-- Projected Dividend / Payout per £1 ticket (NO FIXED ODDS) -->
-            <div class="w-24 sm:w-28 text-right">
-              <span class="text-sm sm:text-xl lg:text-2xl font-black font-display ${isFav ? 'text-yellow-300 drop-shadow-[0_0_10px_rgba(253,224,71,0.5)]' : 'text-amber-200'}">
+            <div class="w-20 sm:w-24 text-right">
+              <span class="text-xs sm:text-lg font-black font-display ${isFav ? 'text-yellow-300 drop-shadow-[0_0_10px_rgba(253,224,71,0.5)]' : 'text-amber-200'}">
                 ${dividendFormatted}
               </span>
-              <span class="block text-[9px] uppercase font-bold text-brand-silver">per ticket</span>
+              <span class="block text-[8px] uppercase font-bold text-brand-silver">per ticket</span>
             </div>
 
             <!-- OPERATOR QUICK BET BUTTONS (Hidden in TV Mode) -->
-            <div class="operator-only flex items-center gap-1.5 pl-2 border-l border-brand-moss/80">
-              <button onclick="addBet(${horse.id}, 1)" class="w-8 h-8 rounded-lg bg-brand-emerald hover:bg-emerald-500 text-white font-black text-xs transition shadow active:scale-95" title="Add 1 Ticket">
+            <div class="operator-only flex items-center gap-1 pl-2 border-l border-brand-moss/80">
+              <button onclick="addBet(${horse.id}, 1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-brand-emerald hover:bg-emerald-500 text-white font-black text-xs transition shadow active:scale-95" title="Add 1 Ticket">
                 +1
               </button>
-              <button onclick="addBet(${horse.id}, 5)" class="w-8 h-8 rounded-lg bg-brand-forest hover:bg-brand-moss text-brand-gold hover:text-white font-black text-xs border border-brand-gold/40 transition shadow active:scale-95" title="Add 5 Tickets">
+              <button onclick="addBet(${horse.id}, 5)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-brand-forest hover:bg-brand-moss text-brand-gold hover:text-white font-black text-xs border border-brand-gold/40 transition shadow active:scale-95" title="Add 5 Tickets">
                 +5
               </button>
-              <button onclick="addBet(${horse.id}, -1)" class="w-7 h-8 rounded-lg bg-black/50 hover:bg-red-950 text-red-400 font-bold text-xs border border-red-900/60 transition" title="Minus 1 Ticket">
+              <button onclick="addBet(${horse.id}, -1)" class="w-6 h-7 sm:w-7 sm:h-8 rounded-md bg-black/50 hover:bg-red-950 text-red-400 font-bold text-xs border border-red-900/60 transition" title="Minus 1 Ticket">
                 -
               </button>
             </div>
