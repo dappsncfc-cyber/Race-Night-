@@ -235,6 +235,9 @@
 
         <!-- Operator Lock / Declare Winner Quick Bar -->
         <div class="operator-only flex items-center gap-2 pl-4 border-l border-brand-moss">
+          <button onclick="startRacePlayback()" class="px-3 py-1 rounded-lg bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-600 hover:from-emerald-500 hover:to-green-400 text-slate-950 font-black text-[11px] tracking-wider uppercase shadow-lg transition flex items-center gap-1.5 border border-green-300 animate-pulse">
+            <span>🎬</span> And Now They Are Off!
+          </button>
           <button onclick="openWinnerModal()" class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-extrabold text-[11px] tracking-wider uppercase shadow transition flex items-center gap-1">
             <span>🏆</span> Declare Winner
           </button>
@@ -511,6 +514,90 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- FULL SCREEN RACE VIDEO MODAL & THEATRE ENGINE -->
+  <div id="raceVideoModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl hidden flex-col items-center justify-center p-2 sm:p-6 animate-fade">
+    <div class="w-full h-full max-w-[1920px] flex flex-col relative rounded-3xl border-2 border-brand-gold/60 bg-black shadow-[0_0_100px_rgba(0,0,0,0.9)] overflow-hidden">
+
+      <!-- Video Header Overlay -->
+      <div class="absolute top-0 inset-x-0 bg-gradient-to-b from-black/90 via-black/50 to-transparent p-4 z-20 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span id="videoModalRaceBadge" class="px-3 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-sm uppercase tracking-wider font-display shadow">
+            R1
+          </span>
+          <div>
+            <h3 id="videoModalRaceTitle" class="text-xl sm:text-2xl font-serif font-bold text-white tracking-wide">
+              The West Street Maiden Stakes
+            </h3>
+            <p class="text-xs text-brand-gold flex items-center gap-1.5 font-sans">
+              <span>🏇 Official Race Film</span>
+              <span>•</span>
+              <span id="videoDurationLabel">0:00 / 1:36</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Video Control Toolbar -->
+        <div class="flex items-center gap-2">
+          <label class="operator-only px-3 py-1.5 rounded-xl bg-brand-forest/80 hover:bg-brand-moss border border-brand-gold/40 text-brand-gold text-xs font-bold cursor-pointer transition flex items-center gap-1">
+            <span>📁 Load Local Video</span>
+            <input type="file" accept="video/*" onchange="handleVideoFileSelect(event)" class="hidden">
+          </label>
+          <button onclick="promptVideoUrl()" class="operator-only px-3 py-1.5 rounded-xl bg-brand-forest/80 hover:bg-brand-moss border border-brand-gold/40 text-brand-silver hover:text-white text-xs font-bold transition">
+            🔗 Video URL
+          </button>
+          <button onclick="closeRaceVideoModal()" class="p-2 rounded-xl bg-red-950/80 hover:bg-red-900 border border-red-500 text-red-200 text-base font-bold transition" title="Close Race Video">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Video Element & Empty File Fallback -->
+      <div class="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
+        <video id="raceVideoElement" class="w-full h-full object-contain" playsinline preload="auto"></video>
+
+        <!-- Prompt when no video is assigned -->
+        <div id="videoEmptyPrompt" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-brand-dark to-black">
+          <div class="w-20 h-20 rounded-3xl bg-brand-forest/60 border border-brand-gold flex items-center justify-center text-4xl mb-4 shadow-xl">
+            🏇
+          </div>
+          <h4 class="text-2xl font-serif font-bold text-white mb-2">No Video Selected for this Race</h4>
+          <p class="text-sm text-brand-silver max-w-md mb-6">
+            Please select or drop a local MP4/WebM race video file or provide a streaming URL.
+          </p>
+          <div class="flex items-center gap-3">
+            <label class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-goldlight text-slate-950 font-black text-xs uppercase tracking-wider cursor-pointer shadow-lg hover:scale-105 transition">
+              Select Video File
+              <input type="file" accept="video/*" onchange="handleVideoFileSelect(event)" class="hidden">
+            </label>
+            <button onclick="quickFinishRace1()" class="px-5 py-2.5 rounded-xl bg-brand-forest hover:bg-brand-moss border border-brand-gold/40 text-brand-gold font-bold text-xs uppercase tracking-wider transition">
+              Simulate Race Finish ➡️
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Bottom Action Control Bar -->
+      <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-4 z-20 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <button onclick="toggleVideoPlayback()" id="btnPlayPause" class="px-4 py-2 rounded-xl bg-brand-gold text-slate-950 font-black text-xs uppercase tracking-wider shadow hover:scale-105 transition">
+            ⏸ Pause
+          </button>
+          <button onclick="restartVideoPlayback()" class="px-3 py-2 rounded-xl bg-brand-forest hover:bg-brand-moss border border-brand-gold/30 text-brand-silver hover:text-white text-xs font-bold transition">
+            ↺ Restart
+          </button>
+          <button onclick="toggleVideoMute()" id="btnMuteVideo" class="p-2 rounded-xl bg-brand-forest hover:bg-brand-moss border border-brand-gold/30 text-white text-xs transition">
+            🔊
+          </button>
+        </div>
+
+        <button onclick="quickFinishRace1()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider font-sans shadow-lg transition flex items-center gap-1.5">
+          <span>🏁</span> Skip to Photo Finish
+        </button>
+      </div>
+
     </div>
   </div>
 
@@ -924,7 +1011,7 @@
     }
 
     // --- VIDEO PLAYER & CINEMA THEATRE ENGINE ---
-    let raceVideoSrc = null;
+    let raceVideoSrc = 'Screen recording 2026-10-11 16.42.55.webm';
 
     function startRacePlayback() {
       const race = getCurrentRace();
