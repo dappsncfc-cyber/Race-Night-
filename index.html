@@ -1568,43 +1568,18 @@
 
     // --- VIDEO PRELOADER & CINEMA THEATRE ENGINE ---
     const VideoPreloader = {
-      cache: {}, // race.id -> Blob URL
-      status: {}, // race.id -> 'idle' | 'loading' | 'ready' | 'error'
+      preloadedElements: {}, // race.id -> HTMLVideoElement
 
       preloadAll() {
         AppState.races.forEach(race => {
-          if (race.videoSrc && !this.cache[race.id]) {
-            this.preloadRaceVideo(race);
+          if (race.videoSrc && !this.preloadedElements[race.id]) {
+            const v = document.createElement('video');
+            v.preload = 'auto';
+            v.src = race.videoSrc;
+            v.load();
+            this.preloadedElements[race.id] = v;
           }
         });
-      },
-
-      preloadRaceVideo(race) {
-        const src = race.videoSrc;
-        if (!src || this.cache[race.id] || this.status[race.id] === 'loading' || src.startsWith('blob:')) return;
-
-        this.status[race.id] = 'loading';
-        fetch(src)
-          .then(response => {
-            if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-            return response.blob();
-          })
-          .then(blob => {
-            const objectUrl = URL.createObjectURL(blob);
-            this.cache[race.id] = objectUrl;
-            this.status[race.id] = 'ready';
-          })
-          .catch(err => {
-            console.warn(`Preload error for Race ${race.id}:`, err);
-            this.status[race.id] = 'error';
-          });
-      },
-
-      getVideoSrc(race) {
-        if (this.cache[race.id]) {
-          return this.cache[race.id];
-        }
-        return race.videoSrc;
       }
     };
 
@@ -1630,11 +1605,12 @@
       const video = document.getElementById('raceVideoElement');
       const emptyPrompt = document.getElementById('videoEmptyPrompt');
 
-      const currentVideoSrc = VideoPreloader.getVideoSrc(race) || race.videoSrc || raceVideoSrc;
+      const currentVideoSrc = race.videoSrc || raceVideoSrc;
       if (currentVideoSrc) {
         emptyPrompt.classList.add('hidden');
-        if (video.src !== currentVideoSrc) {
+        if (!video.src.endsWith(currentVideoSrc)) {
           video.src = currentVideoSrc;
+          video.load();
         }
         video.currentTime = 0;
         video.play().catch(() => {});
