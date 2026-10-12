@@ -1566,7 +1566,48 @@
       }
     }
 
-    // --- VIDEO PLAYER & CINEMA THEATRE ENGINE ---
+    // --- VIDEO PRELOADER & CINEMA THEATRE ENGINE ---
+    const VideoPreloader = {
+      cache: {}, // race.id -> Blob URL
+      status: {}, // race.id -> 'idle' | 'loading' | 'ready' | 'error'
+
+      preloadAll() {
+        AppState.races.forEach(race => {
+          if (race.videoSrc && !this.cache[race.id]) {
+            this.preloadRaceVideo(race);
+          }
+        });
+      },
+
+      preloadRaceVideo(race) {
+        const src = race.videoSrc;
+        if (!src || this.cache[race.id] || this.status[race.id] === 'loading' || src.startsWith('blob:')) return;
+
+        this.status[race.id] = 'loading';
+        fetch(src)
+          .then(response => {
+            if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+            return response.blob();
+          })
+          .then(blob => {
+            const objectUrl = URL.createObjectURL(blob);
+            this.cache[race.id] = objectUrl;
+            this.status[race.id] = 'ready';
+          })
+          .catch(err => {
+            console.warn(`Preload error for Race ${race.id}:`, err);
+            this.status[race.id] = 'error';
+          });
+      },
+
+      getVideoSrc(race) {
+        if (this.cache[race.id]) {
+          return this.cache[race.id];
+        }
+        return race.videoSrc;
+      }
+    };
+
     let raceVideoSrc = 'race1.webm';
 
     function startRacePlayback() {
@@ -1589,10 +1630,12 @@
       const video = document.getElementById('raceVideoElement');
       const emptyPrompt = document.getElementById('videoEmptyPrompt');
 
-      const currentVideoSrc = race.videoSrc || raceVideoSrc;
+      const currentVideoSrc = VideoPreloader.getVideoSrc(race) || race.videoSrc || raceVideoSrc;
       if (currentVideoSrc) {
         emptyPrompt.classList.add('hidden');
-        video.src = currentVideoSrc;
+        if (video.src !== currentVideoSrc) {
+          video.src = currentVideoSrc;
+        }
         video.currentTime = 0;
         video.play().catch(() => {});
       } else {
@@ -2206,6 +2249,7 @@
       renderTabs();
       renderToteBoard();
       TimerApp.updateDisplay();
+      VideoPreloader.preloadAll();
     };
   </script>
 </body>
