@@ -334,23 +334,23 @@
 
   <!-- DECLARE WINNER MODAL -->
   <div id="winnerModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="card-glass rounded-3xl max-w-2xl w-full p-6 sm:p-8 border-2 border-brand-gold shadow-2xl relative text-center">
+    <div class="card-glass rounded-3xl max-w-4xl w-full p-6 sm:p-8 border-2 border-brand-gold shadow-2xl relative text-center">
       <button onclick="closeWinnerModal()" class="absolute top-4 right-4 text-brand-silver hover:text-white p-2 rounded-lg bg-black/40">
         ✕
       </button>
       
-      <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border border-brand-gold mx-auto flex items-center justify-center text-3xl mb-3">
+      <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-500/20 border border-brand-gold mx-auto flex items-center justify-center text-2xl sm:text-3xl mb-2 sm:mb-3">
         🏆
       </div>
       <h3 class="text-2xl sm:text-3xl font-serif font-bold text-brand-cream">
         Confirm Race Winner
       </h3>
-      <p class="text-xs sm:text-sm text-brand-silver mt-1 mb-6">
+      <p class="text-xs sm:text-sm text-brand-silver mt-1 mb-5">
         Select which horse crossed the winning line to calculate and display the official Tote dividend payout.
       </p>
 
-      <!-- 10 Runners Picker Grid -->
-      <div id="winnerPickerGrid" class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-6">
+      <!-- Runners Picker Grid -->
+      <div id="winnerPickerGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 mb-6">
         <!-- Rendered dynamically -->
       </div>
 
@@ -1883,27 +1883,43 @@
             : 'card-glass hover:border-brand-gold/40'
         }`;
 
+        // Dynamically tune text & icon density based on total runner count in field
+        const runnerCount = sortedHorses.length;
+        const isDense = runnerCount >= 12;
+
+        const rowPaddingClass = isDense ? 'px-2 py-0.5 sm:py-1' : 'px-2.5 sm:px-3 py-1 sm:py-1.5';
+        const silkSizeClass = isDense ? 'w-6 h-6 sm:w-7 sm:h-7' : 'w-8 h-8 sm:w-9 sm:h-9';
+        const numBadgeSizeClass = isDense ? 'w-6 h-6 sm:w-7 sm:h-7 text-xs' : 'w-7 h-7 sm:w-8 sm:h-8 text-xs sm:text-sm';
+        const nameFontClass = isDense ? 'text-xs sm:text-sm lg:text-base leading-snug' : 'text-sm sm:text-base lg:text-lg leading-tight';
+        const subFontClass = isDense ? 'text-[9px] sm:text-[10px]' : 'text-[10px] sm:text-[11px]';
+
+        row.className = `horse-row flex-1 min-h-0 rounded-xl ${rowPaddingClass} flex items-center justify-between gap-2 transition-all ${
+          isFav
+            ? 'card-glass-fav pulse-fav'
+            : 'card-glass hover:border-brand-gold/40'
+        }`;
+
         // Render silk graphic or fallback badge
         const silkDisplay = horse.silkSvg 
-          ? `<div class="w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0 relative flex items-center justify-center p-0.5">${horse.silkSvg}</div>`
-          : `<div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center font-display font-black text-base shadow border border-white/20 flex-shrink-0" style="background-color: ${horse.silkBg || '#333'}; color: ${horse.silkText || '#fff'};">
+          ? `<div class="${silkSizeClass} flex-shrink-0 relative flex items-center justify-center p-0.5">${horse.silkSvg}</div>`
+          : `<div class="${silkSizeClass} rounded-lg flex items-center justify-center font-display font-black text-sm shadow border border-white/20 flex-shrink-0" style="background-color: ${horse.silkBg || '#333'}; color: ${horse.silkText || '#fff'};">
               ${horse.num}
             </div>`;
 
         row.innerHTML = `
           <!-- Rank, Number, Silk & Runner Details -->
-          <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+          <div class="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1">
             <!-- Dynamic Rank Position Badge -->
-            <div class="flex flex-col items-center justify-center w-6 sm:w-7 flex-shrink-0">
+            <div class="flex flex-col items-center justify-center w-5 sm:w-6 flex-shrink-0">
               <span class="text-xs font-black font-display ${isFav ? 'text-amber-300 font-extrabold text-xs' : 'text-brand-silver'}">
                 #${index + 1}
               </span>
-              ${isFav ? '<span class="text-[8px] font-black uppercase text-amber-300 font-sans tracking-tight">FAV</span>' : ''}
+              ${isFav ? '<span class="text-[7px] sm:text-[8px] font-black uppercase text-amber-300 font-sans tracking-tight">FAV</span>' : ''}
               ${is2ndFav ? '<span class="text-[7px] font-bold text-slate-400 font-sans">2nd</span>' : ''}
             </div>
 
             <!-- Cloth Number Badge -->
-            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-black/60 border border-brand-gold/50 flex items-center justify-center text-xs sm:text-sm font-black font-display text-brand-gold flex-shrink-0">
+            <div class="${numBadgeSizeClass} rounded-md bg-black/60 border border-brand-gold/50 flex items-center justify-center font-black font-display text-brand-gold flex-shrink-0">
               ${horse.num}
             </div>
 
@@ -1912,17 +1928,17 @@
 
             <!-- Runner Name, Owner & Jockey -->
             <div class="min-w-0 flex-1">
-              <div class="flex items-center gap-1.5">
-                <span class="text-sm sm:text-base lg:text-lg font-serif font-bold tracking-wide truncate ${isFav ? 'text-white font-extrabold' : 'text-brand-cream'}">
+              <div class="flex items-center gap-1">
+                <span class="${nameFontClass} font-serif font-bold tracking-wide truncate ${isFav ? 'text-white font-extrabold' : 'text-brand-cream'}">
                   ${horse.name}
                 </span>
                 <button onclick="openEditHorseModal(${horse.id})" class="operator-only text-brand-silver/60 hover:text-brand-gold text-[10px] transition" title="Edit name / owner">
                   ✎
                 </button>
               </div>
-              <div class="text-[10px] sm:text-[11px] text-brand-silver truncate flex items-center gap-2">
+              <div class="${subFontClass} text-brand-silver truncate flex items-center gap-1.5 leading-none">
                 <span>Jockey: <strong class="text-brand-platinum font-semibold">${horse.jockey || 'Apprentice'}</strong></span>
-                <span class="text-brand-gold">•</span>
+                <span class="text-brand-gold/70">•</span>
                 <span>Owner: <strong class="text-brand-platinum font-normal">${horse.owner || 'Open'}</strong></span>
               </div>
             </div>
@@ -1977,26 +1993,34 @@
       });
     }
 
-    // --- Winner Modal Picker Updated for Silks and 10 Runners ---
+    // --- Winner Modal Picker Updated for Silks & Variable Field Sizes ---
     function openWinnerModal() {
       const race = getCurrentRace();
       const grid = document.getElementById('winnerPickerGrid');
       grid.innerHTML = '';
 
+      const runnerCount = race.horses.length;
+      const isLargeField = runnerCount >= 10;
+
+      const btnPadding = isLargeField ? "p-2 sm:p-2.5" : "p-2.5 sm:p-3";
+      const iconSize = isLargeField ? "w-7 h-7 sm:w-8 sm:h-8" : "w-8 h-8 sm:w-9 sm:h-9";
+      const nameFontSize = isLargeField ? "text-[11px] sm:text-xs lg:text-sm" : "text-xs sm:text-sm lg:text-base";
+      const detailFontSize = isLargeField ? "text-[9px] sm:text-[10px]" : "text-[10px] sm:text-[11px]";
+
       race.horses.forEach(h => {
         const btn = document.createElement('button');
         btn.onclick = () => declareWinner(h.id);
-        btn.className = "card-glass hover:card-glass-fav p-3 rounded-2xl flex items-center gap-3 border border-brand-moss hover:border-brand-gold transition text-left active:scale-95";
+        btn.className = `card-glass hover:card-glass-fav ${btnPadding} rounded-2xl flex items-center gap-2 sm:gap-2.5 border border-brand-moss hover:border-brand-gold transition text-left active:scale-95 min-w-0`;
         
         const icon = h.silkSvg 
-          ? `<div class="w-9 h-9 flex-shrink-0 flex items-center justify-center">${h.silkSvg}</div>`
-          : `<div class="w-9 h-9 rounded-xl flex items-center justify-center font-display font-black text-base shadow" style="background-color: ${h.silkBg}; color: ${h.silkText};">${h.num}</div>`;
+          ? `<div class="${iconSize} flex-shrink-0 flex items-center justify-center p-0.5">${h.silkSvg}</div>`
+          : `<div class="${iconSize} rounded-xl flex items-center justify-center font-display font-black text-xs sm:text-sm shadow flex-shrink-0" style="background-color: ${h.silkBg}; color: ${h.silkText};">${h.num}</div>`;
 
         btn.innerHTML = `
           ${icon}
-          <div class="truncate">
-            <div class="text-xs font-serif font-bold text-white truncate">${h.num}. ${h.name}</div>
-            <div class="text-[10px] text-brand-gold">${h.tickets} tickets backed</div>
+          <div class="truncate min-w-0 flex-1">
+            <div class="${nameFontSize} font-serif font-bold text-white truncate leading-snug">${h.num}. ${h.name}</div>
+            <div class="${detailFontSize} text-brand-gold truncate">${h.tickets} ${h.tickets === 1 ? 'ticket' : 'tickets'} backed</div>
           </div>
         `;
         grid.appendChild(btn);
