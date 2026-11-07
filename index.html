@@ -238,8 +238,11 @@
           <button onclick="startRacePlayback()" class="px-3 py-1 rounded-lg bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-600 hover:from-emerald-500 hover:to-green-400 text-slate-950 font-black text-[11px] tracking-wider uppercase shadow-lg transition flex items-center gap-1.5 border border-green-300 animate-pulse">
             <span>🎬</span> And Now They Are Off!
           </button>
-          <button onclick="openWinnerModal()" class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-extrabold text-[11px] tracking-wider uppercase shadow transition flex items-center gap-1">
-            <span>🏆</span> Declare Winner
+          <button onclick="autoDeclareRace()" class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-extrabold text-[11px] tracking-wider uppercase shadow transition flex items-center gap-1" title="Auto-declare official winner for this race">
+            <span>🏆</span> Auto Declare Winner
+          </button>
+          <button onclick="openWinnerModal()" class="px-2 py-1 rounded-lg bg-brand-forest hover:bg-brand-moss text-brand-silver hover:text-white text-[11px] border border-brand-gold/30 transition flex items-center gap-1" title="Manually pick a winner if needed">
+            <span>⚙️</span> Pick
           </button>
           <button onclick="openConfigModal()" class="p-1 rounded-lg bg-brand-forest hover:bg-brand-moss text-brand-silver hover:text-white text-[11px] border border-brand-gold/30" title="Tote Stakes & Charity Cut">
             ⚙️ Settings
@@ -618,6 +621,7 @@
             "distance": "Forest Track (Woodland Sprint)",
             "isLocked": false,
             "winnerId": null,
+            "officialWinnerId": 3,
             "videoSrc": "race1.mp4",
             "horses": [
                   {
@@ -683,6 +687,7 @@
             "distance": "Hay Bales Course (40 Metres)",
             "isLocked": false,
             "winnerId": null,
+            "officialWinnerId": 1,
             "videoSrc": "race2.mp4",
             "horses": [
                   {
@@ -748,6 +753,7 @@
             "distance": "Cross Country Track",
             "isLocked": false,
             "winnerId": null,
+            "officialWinnerId": 2,
             "videoSrc": "race3.mp4",
             "horses": [
                   {
@@ -813,6 +819,7 @@
             "distance": "Forest Hurdles",
             "isLocked": false,
             "winnerId": null,
+            "officialWinnerId": 2,
             "videoSrc": "Race4.mp4",
             "horses": [
                   {
@@ -878,6 +885,7 @@
             "distance": "Woodland Trail",
             "isLocked": false,
             "winnerId": null,
+            "officialWinnerId": 3,
             "videoSrc": "Race5.mp4",
             "horses": [
                   {
@@ -943,6 +951,7 @@
             "distance": "Straight Dash",
             "isLocked": false,
             "winnerId": null,
+            "officialWinnerId": 1,
             "videoSrc": "Race6.mp4",
             "horses": [
                   {
@@ -1008,6 +1017,7 @@
             "distance": "Timber Jump Course",
             "isLocked": false,
             "winnerId": null,
+            "officialWinnerId": 3,
             "videoSrc": "Race7.mp4",
             "horses": [
                   {
@@ -1073,6 +1083,7 @@
             "distance": "Paddock Straight",
             "isLocked": false,
             "winnerId": null,
+            "officialWinnerId": 2,
             "videoSrc": "Race8.mp4",
             "horses": [
                   {
@@ -1138,6 +1149,7 @@
             "distance": "Hay Maze Sprint",
             "isLocked": false,
             "winnerId": null,
+            "officialWinnerId": 3,
             "videoSrc": "Race9.mp4",
             "horses": [
                   {
@@ -1203,6 +1215,7 @@
             "distance": "Grand Finale Steeplechase",
             "isLocked": false,
             "winnerId": null,
+            "officialWinnerId": 3,
             "videoSrc": "Race10.mp4",
             "horses": [
                   {
@@ -1591,18 +1604,25 @@
       document.getElementById('videoDurationLabel').innerText = `${curM}:${curS} / ${durM}:${durS}`;
     }
 
+    // Auto-declare winner based on official video result
+    function autoDeclareRace(raceId) {
+      const race = AppState.races.find(r => r.id === (raceId || AppState.currentRaceId)) || getCurrentRace();
+      const targetWinnerId = race.officialWinnerId || 1;
+      declareWinner(targetWinnerId);
+    }
+
     // When the race video completes
     function onRaceVideoEnded() {
-      // Automatic photo-finish bell & winner prompt
+      // Automatic photo-finish bell & auto-declare official race winner
       SoundFX.playBell();
       closeRaceVideoModal();
-      openWinnerModal();
+      autoDeclareRace();
     }
 
     // Instant one-click declare shortcut for current race
     function quickFinishRace() {
       closeRaceVideoModal();
-      openWinnerModal();
+      autoDeclareRace();
     }
 
     function quickFinishRace1() {
